@@ -1,14 +1,19 @@
 const URL = require('url')
 const _none = () => {}
 
+import user_model from '../models/user'
+
 // 返回用户登录状态
-const userSigninState = () => {
+const userSigninState = async () => {
     // return !!URL.parse(window.location.href, true).query.ok
-    return !!localStorage.getItem('user')
+    let isSignIn = await user_model.isSignIn()
+    return !!(isSignIn.status === 200)
+    // return true
 }
 // 验证用户登录状态
-const userSigninAuth = (success = _none, fail = _none) => {
-    let auth = userSigninState()
+const userSigninAuth = async (success = _none, fail = _none) => {
+    let auth = await userSigninState()
+    
     if ( auth ) {
         success(auth)
         return true;

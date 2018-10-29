@@ -203,7 +203,22 @@ session保存的时间是可以设置的
 
 使用express-session中间件来进行session的操作
 
-后端存储好session，需要将其返回给前端，一般是采取cookie的方法，让后端再响应登录成功的信息种设置setCookie(可以让浏览器种下cookie)，而且存再浏览器cookie种，前端发送请求的时候cookie会自动发送到后端
+后端存储好session，需要将其返回给前端，一般是采取cookie的方法，让后端再响应登录成功的信息种设置setCookie(可以让浏览器种下cookie)，而且存再浏览器cookie种，前端发送请求的时候cookie会自动发送到后端, 后端将cookie取出后与session对比处理....
+
+
+具体操作：
+
+1. 前端登录后，后端存储一个对应的session
+
+    使用express-session中间件
+
+    * 配置expess-session中间件
+    * 存: req.session.....
+    * 取： req. session...
+
+2. 后端响应登录结果的时候通过set-cookie方式将session以种cookie的形式，保存在前端
+
+3. 
 
 
 

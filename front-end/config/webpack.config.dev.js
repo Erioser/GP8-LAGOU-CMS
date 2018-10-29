@@ -19,7 +19,7 @@ module.exports = {
     devServer: { // 开发服务器 http-server（webserver） 依赖 webpack-dev-server
         // 让服务器从这两个目录中响应资源
         // contentBase: [PATH.join(__dirname, "../dev"), PATH.join(__dirname, "../public")],
-        host: "10.9.189.14",
+        host: "10.9.189.2",
         // 指定服务器从哪里响应资源
         contentBase: [PATH.join(__dirname, "../dev")],
         compress: true,

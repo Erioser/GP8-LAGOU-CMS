@@ -3,13 +3,14 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser'); // 解析cookie
 var logger = require('morgan');
-
+var session = require('express-session')
 var { version } = require('./config')
 
 // 路由工具
 var indexRouter = require('./routes/index');
 var positionRouter = require('./routes/position');
 var adminRouter = require('./routes/admin');
+var userRouter = require('./routes/user');
 
 // 应用程序
 var app = express();
@@ -17,6 +18,14 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+// express-session
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {  httpOnly: false, secure: false, maxAge: 1000 * 60 * 5 }
+}))
 
 // 使用各种中间件
 app.use(logger('dev'));
@@ -34,6 +43,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api/'+ version +'/position', positionRouter);
 app.use('/api/'+ version +'/admin', adminRouter);
+app.use('/api/'+ version +'/user', userRouter);
 
 
 
