@@ -8,7 +8,7 @@ import toast from '../util/toast'
 // 初始化动作
 const init = () => {
     // 渲染视图
-    render('signup')
+    render('signin')
     // 绑定事件
     bindEvent()
 }
@@ -39,13 +39,14 @@ const bindEvent = () => {
     $('#admin-content').on('submit', '#signin-form', async function (e) {
         e.preventDefault()
         let _params = $(this).serialize()
+        $.cookie('connect.sid', { expires: -1 })
         let _result = await admin_model.signin(qs.parse(_params))
-        console.log(_result)
         switch ( _result.status ) {
             case 203: toast('密码错误'); break;
             case 202:  toast('用户不存在'); break;
             default: 
-                window.location.href = "/#/"; 
+                // localStorage.user = qs.parse(_params).username
+                window.location.href = "/"; 
             break;
         }
     })

@@ -61,13 +61,13 @@ const _init = () => {
     })
 
     //上面的没有匹配到就会跳转404路由或者首页
-    // router.route('*', (req, res, next) => {
-    //     if ( req.url === '' ) { // 刚进入项目，没有hash值，重定向到home
-    //         res.redirect('/home')
-    //     } else { // 如果路径匹配不到，导向404
-    //         res.redirect('/not-found')
-    //     }     
-    // })
+    router.route('*', (req, res, next) => {
+        if ( req.url === '' ) { // 刚进入项目，没有hash值，重定向到home
+            res.redirect('/home')
+        } else { // 如果路径匹配不到，导向404
+            res.redirect('/not-found')
+        }     
+    })
 
     // 因为在控制器中无法使用到router，所以给bus绑定事件，在其他模块中触发bus的事件
     bus.on('go', (path, body = {}) =>  router.go(path, body) )
@@ -79,10 +79,6 @@ const _init = () => {
 }
 // 渲染页面头部
 const renderPageHeader = ( req, res, next ) => {
-    if ( req.url === '/' ) {
-        res.redirect('/home')
-        return false;
-    }
     // 这里的prevUrl就是上一次的URL
     page_header_controller.render(page_header_model.pageHeaderInfo(req.url, prevUrl))
     // 已经进入到当前路由了，将上一次路由改成当前的路由

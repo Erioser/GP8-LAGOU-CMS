@@ -52,24 +52,8 @@ const judgeUserByUsername = (username) => {
             
 }
 
-// 通过用户名验证是否有这个用户
-const getUserInfoById = (id) => {
-    return UserModel
-    .find({ _id: id })
-    .then((results) => {
-        let { _id, username, nickname } = results[0]
-        return {
-            _id, username, nickname
-        }
-    })
-    .catch(() => {
-        return false
-    })         
-}
-
 module.exports = {
     signup,
     signin,
-    judgeUserByUsername,
-    getUserInfoById
+    judgeUserByUsername
 }

@@ -4,7 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser'); // 解析cookie
 var logger = require('morgan');
 var session = require('express-session')
-
 var { version } = require('./config')
 
 // 路由工具
@@ -20,18 +19,12 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// 使用session中间件
-
+// express-session
 app.use(session({
-  secret: 'i love u', // 加密密钥
+  secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
-  cookie: { // set cookie使让浏览器怎样存cookie
-    path: '/', 
-    httpOnly: true, 
-    secure: false, 
-    maxAge: 1000 * 60 * 60 * 24  // session的过期的时间 。。ms
-  }
+  cookie: {  httpOnly: false, secure: false, maxAge: 1000 * 60 * 5 }
 }))
 
 // 使用各种中间件
