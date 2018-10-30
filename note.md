@@ -236,13 +236,34 @@ session的缺点：
 
 后端不在存储认证信息，而是在用户登录的时候生成一个token，然后返回给前端，前端进行存储，在需要进行验证的时候将token一并发送到后端，后端进行验证
 
+1. 用户登录的时候，生成token
+
+    jwt -> json web tokens
+
+    token 中应该包含 payload （数据） cert （密钥） 确定加密方式 SHA256
+
+    npmjs -> jsonwebtoken
 
 
+> 加密的方式：对称加密和非对称加密，对称加密指的是加密解密使用同一个密钥，非对称加密使用公钥和私钥，加密用私钥加密，解密用公钥解密
 
 
+2. 返回给前端 cookie 
+
+3. 前端进行存储
+
+4. 前端在进行数据请求的时候发送token到后端
+
+5. 后端进行token验证，而且进行过期时间的验证
 
 
+生成私钥：
 
+ssh-keygen -t rsa -b 2048 -f private.key
+
+生成公钥
+
+openssl rsa -in private.key -pubout -outform PEM -out public.key
 
 
 
