@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser'); // 解析cookie
 var logger = require('morgan');
-var session = require('express-session')
+// var session = require('express-session')
 var { version } = require('./config')
 
 // 路由工具
@@ -19,13 +19,13 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// express-session
-app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-  cookie: {  httpOnly: false, secure: false, maxAge: 1000 * 60 * 5 }
-}))
+// // express-session
+// app.use(session({
+//   secret: 'keyboard cat',
+//   resave: false,
+//   saveUninitialized: true,
+//   cookie: {  httpOnly: false, secure: false, maxAge: 1000 * 60 * 5 }
+// }))
 
 // 使用各种中间件
 app.use(logger('dev'));

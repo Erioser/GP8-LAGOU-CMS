@@ -33,31 +33,27 @@ const signin = async (req, res, next) => {
         if (_data) {
 
             // 对称 加密
-            let _payload = { // 钥加密的数据
-                userid: _judge_result[0]._id,
-                username: _judge_result[0].username,
-                level: 8,
-            }
-            let _cert = 'i love u' // 密钥
-            var _token = jwt.sign(_payload, _cert);
-
-            // 非对称加密
-
             // let _payload = { // 钥加密的数据
             //     userid: _judge_result[0]._id,
             //     username: _judge_result[0].username,
             //     level: 8,
             // }
-            // let _private = fs.readFileSync(PATH.resolve(__dirname, '../keys/private.key'))
-            // var _token = jwt.sign(_payload, _private, { algorithm: 'RS256'});
+            // let _cert = 'i love u' // 密钥
+            // var _token = jwt.sign(_payload, _cert);
+
+            // 非对称加密
+            let _payload = { // 钥加密的数据
+                userid: _judge_result[0]._id,
+                username: _judge_result[0].username,
+                level: 8,
+            }
+            // 取出来私钥
+            let _private = fs.readFileSync(PATH.resolve(__dirname, '../keys/private.key'))
+
+            var _token = jwt.sign(_payload, _private, { algorithm: 'RS256'});
             
-            // let _public = fs.readFileSync(PATH.resolve(__dirname, '../keys/private.key.pub'))
-            // // let _result = jwt.verify(_token, _public, { algorithms: 'RS256' })
-            // jwt.verify(_token, _public, { algorithms: ['RS256'] }, function (err, payload) {
-            //     console.log(err)
-            //     console.log(payload)
-            //   });
-            // res.cookie('token', _token)
+            
+
             res.render('admin', { code: 200, data: JSON.stringify({
                 token: _token
             })})

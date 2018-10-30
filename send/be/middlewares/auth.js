@@ -1,11 +1,22 @@
-
+const jwt = require('jsonwebtoken')
 const userSigninAuth = (req, res, next) => {
-    if ( req.session.userinfo ) {
-        next()
-    } else {
+    try {
+        var decoded = jwt.verify(req.query.token, 'i love u'); 
+        let _time =  (Date.now() / 1000) - decoded.iat
+        let _expires = 30 
+        if ( _time > _expires ) {
+            res.render('user', {
+                code: 403,
+                data: JSON.stringify({ msg: '登录过期，请重新登录' })
+            })
+        } else {
+            req.token = decoded
+            next()
+        }        
+    } catch(err) {
         res.render('user', {
             code: 403,
-            data: JSON.stringify({ msg: '登录可能过期，请重新登录' })
+            data: JSON.stringify({ msg: '请登录后操作' })
         })
     }
 }

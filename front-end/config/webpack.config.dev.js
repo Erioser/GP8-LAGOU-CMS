@@ -16,10 +16,11 @@ module.exports = {
         // 输出路径，路径以配置文件为基准的
         path: PATH.resolve(__dirname, '../dev')
     },
+    devtool: 'true',
     devServer: { // 开发服务器 http-server（webserver） 依赖 webpack-dev-server
         // 让服务器从这两个目录中响应资源
         // contentBase: [PATH.join(__dirname, "../dev"), PATH.join(__dirname, "../public")],
-        host: "10.9.189.2",
+        host: "10.9.189.3",
         // 指定服务器从哪里响应资源
         contentBase: [PATH.join(__dirname, "../dev")],
         compress: true,

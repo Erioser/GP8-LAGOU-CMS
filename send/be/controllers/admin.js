@@ -1,4 +1,7 @@
 const admin_model = require('../models/admin')
+const jwt = require('jsonwebtoken')
+const fs  = require('fs')
+const PATH  = require('path')
 const { handleData } = require('../util')
 const signup = async (req, res, next) => {
     
@@ -28,12 +31,36 @@ const signin = async (req, res, next) => {
         // 如果前端利用完整的表单提交逻辑的话，可以利用res.redirect告知浏览器进行跳转
         // res.redirect('/')
         if (_data) {
-            // 登录成功后，保存session, 注意再这里存的东西不是为了给前端用的， 1. 用来验证 2. 存储一些用户信息做其他判断
-            req.session.userinfo = {
+
+            // 对称 加密
+            let _payload = { // 钥加密的数据
                 userid: _judge_result[0]._id,
-                level: _judge_result[0].level || 7
+                username: _judge_result[0].username,
+                level: 8,
             }
-            res.render('admin', { code: 200, data: JSON.stringify('success') })
+            let _cert = 'i love u' // 密钥
+            var _token = jwt.sign(_payload, _cert);
+
+            // 非对称加密
+
+            // let _payload = { // 钥加密的数据
+            //     userid: _judge_result[0]._id,
+            //     username: _judge_result[0].username,
+            //     level: 8,
+            // }
+            // let _private = fs.readFileSync(PATH.resolve(__dirname, '../keys/private.key'))
+            // var _token = jwt.sign(_payload, _private, { algorithm: 'RS256'});
+            
+            // let _public = fs.readFileSync(PATH.resolve(__dirname, '../keys/private.key.pub'))
+            // // let _result = jwt.verify(_token, _public, { algorithms: 'RS256' })
+            // jwt.verify(_token, _public, { algorithms: ['RS256'] }, function (err, payload) {
+            //     console.log(err)
+            //     console.log(payload)
+            //   });
+            // res.cookie('token', _token)
+            res.render('admin', { code: 200, data: JSON.stringify({
+                token: _token
+            })})
 
         } else {
             res.render('admin', { code: 203, data: JSON.stringify('密码错误') })

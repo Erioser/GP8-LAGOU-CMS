@@ -12,11 +12,11 @@ router.use(resApplicationJson)
 
 
 /* GET home page. */
-router.get('/isSignIn', user_controller.isSignIn);
+router.get('/isSignIn', auth.userSigninAuth, user_controller.isSignIn);
 
 
 router.get('/info', auth.userSigninAuth, user_controller.info);
-router.get('/exit', user_controller.exit);
+// router.get('/exit', user_controller.exit);
 
 router.get('/check', auth.userSigninAuth, user_controller.check);
 

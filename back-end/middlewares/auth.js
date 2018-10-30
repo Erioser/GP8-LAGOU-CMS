@@ -1,7 +1,12 @@
 const jwt = require('jsonwebtoken')
+const fs = require('fs')
+const PATH = require('path')
 const userSigninAuth = (req, res, next) => {
     try {
-        var decoded = jwt.verify(req.query.token, 'i love u'); 
+
+        let _public = fs.readFileSync(PATH.resolve(__dirname, '../keys/public.key'))
+        let decoded = jwt.verify(req.query.token, _public, { algorithms: 'RS256' })
+        // var decoded = jwt.verify(req.query.token, 'i love u'); 
         let _time =  (Date.now() / 1000) - decoded.iat
         let _expires = 30 
         if ( _time > _expires ) {
